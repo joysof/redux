@@ -1,15 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Count from './Count'
 import Button from './Button'
+import { useDispatch, useSelector } from 'react-redux'
+import { decrement, increment } from '../features/counters/CounterSlice'
 
-const Counter = () => {
-  const [count , setCount] = useState(10)
+
+const Counter = ({id}) => {
+  const dispatch = useDispatch()
+
+const count = useSelector((state ) => state.counters.find((counter) => counter.id === id)?.value)
 
   const incrementHandler = () =>{
-    setCount((prevCount) => prevCount +1)
+    dispatch(increment(id))
   }
   const decrementHandler = () =>{
-    setCount((prevCount) => prevCount -1)
+    dispatch(decrement(id))
   }
   return (
     <div className='p-4 h-auto flex flex-col items-center justify-center space-y-5 bg-white rounded shadow'>
